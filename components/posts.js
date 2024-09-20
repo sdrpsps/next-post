@@ -4,12 +4,18 @@ import { useOptimistic } from "react";
 import { formatDate } from "@/lib/format";
 import LikeButton from "./like-icon";
 import { togglePostLikeStatus } from "@/actions/posts";
+import Image from "next/image";
+
+function imageLoader(config) {
+  const [urlStart, urlEnd] = config.src.split("upload/");
+  return `${urlStart}upload/w_200,q_${config.quality}/${urlEnd}`;
+}
 
 function Post({ action, post }) {
   return (
     <article className="post">
       <div className="post-image">
-        <img src={post.image} alt={post.title} />
+        <Image loader={imageLoader} src={post.image} fill sizes="8rem" alt={post.title} quality={50} />
       </div>
       <div className="post-content">
         <header>
